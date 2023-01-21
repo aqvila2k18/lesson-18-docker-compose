@@ -32,15 +32,5 @@ volumes:
 secrets:
   mysql-root-password:
     file: ./mysql-root-password.txt
-  mysql-database:
-    file: ./mysql-database.txt
-  mysql-user:
-    file: ./mysql-user.txt
-  mysql-password:
-    file: ./mysql-password.txt
-  wp-db-user:
-    file: ./wp-db-user.txt
-  wp-db-password:
-    file: ./wp-db-password.txt
-  wp-db-name:
-    file: ./wp-db-name.txt
+  db-password:
+    file: ./db-password.txt
