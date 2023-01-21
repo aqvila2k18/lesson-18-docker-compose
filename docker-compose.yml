@@ -1,26 +1,46 @@
 version: "3.8"
 services:
- db:
-  image: amd64/mysql:8
-  volumes:
-   - db_data:/var/lib/mysql
-  restart: always
-  environment:
-   MYSQL_ROOT_PASSWORD: somewordpress
-   MYSQL_DATABASE: wordpress
-   MYSQL_USER: wordpress
-   MYSQL_PASSWORD: wordpress
- wordpress:
-  depends_on:
-   - db
-  image: amd64/wordpress:6
-  ports:
-   - "8000:80"
-  restart: always
-  environment:
-   WORDPRESS_DB_HOST: db:3306
-   WORDPRESS_DB_USER: wordpress
-   WORDPRESS_DB_PASSWORD: wordpress
-   WORDPRESS_DB_NAME: wordpress
+  db:
+    image: amd64/mysql:8
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    secrets:
+     - mysql-root-password
+     - db-password
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD_FILE: /run/secrets/db-password
+  wordpress:
+    depends_on:
+     - db
+    image: amd64/wordpress:6
+    ports:
+     - "8000:80"
+    restart: always
+    secrets:
+     - db-password
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db-password
+      WORDPRESS_DB_NAME: wordpress
 volumes:
- db_data: {}
+  db_data: {}
+secrets:
+  mysql-root-password:
+    file: ./mysql-root-password.txt
+  mysql-database:
+    file: ./mysql-database.txt
+  mysql-user:
+    file: ./mysql-user.txt
+  mysql-password:
+    file: ./mysql-password.txt
+  wp-db-user:
+    file: ./wp-db-user.txt
+  wp-db-password:
+    file: ./wp-db-password.txt
+  wp-db-name:
+    file: ./wp-db-name.txt
