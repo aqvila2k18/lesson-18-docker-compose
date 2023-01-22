@@ -31,6 +31,6 @@ volumes:
   db_data: {}
 secrets:
   mysql-root-password:
-    file: ./mysql-root-password.txt
+    external: true
   db-password:
-    file: ./db-password.txt
+    external: true
