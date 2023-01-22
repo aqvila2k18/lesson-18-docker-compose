@@ -1,4 +1,4 @@
-Заняття 18 - ДЗ 14. Docker Secrets
+Заняття 18 - ДЗ 14. Docker Secrets.
 Второй вариант, когда пароли хранятся не в файле, а в Docker secret
 
 docker swarm init
