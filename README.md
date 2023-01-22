@@ -1,9 +1,10 @@
 Заняття 18 - ДЗ 14. Docker Secrets
-
-Для запуска необходимо скачать все 3 файла в одну директорию
+Второй вариант, когда пароли хранятся не в файле, а в Docker secret
 
 docker swarm init
 
-docker stack deploy -c docker-compose.yml wordpress
+printf "A-secret-root-password" | docker secret create mysql-root-password - 
 
-Пароли храняться в файликах db-password.txt и mysql-root-password.txt . Файлы должны храниться в той же директории что и docker-compose.yml .
+printf "A-secret-db-password" | docker secret create db-password - 
+
+docker stack deploy -c docker-compose.yml wordpress
